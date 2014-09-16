@@ -48,6 +48,7 @@ public class RTSim_Parser {
 
   private boolean hasSyntaxError = false;
   private String syntaxErrorMessage;
+  public List<ParseException> syntaxErrors = new ArrayList<>();
   
   void recover(ParseException ex, int recoveryPoint) {
       syntaxErrors.add(ex);
