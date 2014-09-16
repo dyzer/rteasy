@@ -49,6 +49,14 @@ public class RTSim_Parser {
   private boolean hasSyntaxError = false;
   private String syntaxErrorMessage;
   
+  void recover(ParseException ex, int recoveryPoint) {
+      syntaxErrors.add(ex);
+      Token t;
+    do {
+      t = getNextToken();
+    } while (t.kind != EOF && t.kind != recoveryPoint);
+  }
+
   public ASTRtProg parseRTProgram() {
     ASTRtProg rn = null;
     try {
@@ -57,6 +65,7 @@ public class RTSim_Parser {
     catch (Exception e) {
       hasSyntaxError = true;
       syntaxErrorMessage = e.getMessage();
+      recover(e, SEMICOLON);
     }
     return rn;
   }
